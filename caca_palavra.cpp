@@ -1,7 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <cstring>
-#define M 10
+#define M 100
 
 using namespace std;
 
@@ -25,7 +25,7 @@ bool procuraNaHorizontal(char matriz[][M], Palavras palavra, int linha, int colu
                         letra++;
                         countAndarColuna++;
                     }else if(palavra.palavra[letra] == '\0'){
-                        cout << "A palavra '"<< palavra.palavra <<"' foi localizada horizontalmente a partir da linha " << i << " e da coluna " << j << endl;
+                        cout << "A palavra '"<< palavra.palavra <<"' foi localizada horizontalmente a partir da " << i+1 << "ª linha e da " << j+1 << "ª coluna " << endl;
                         achouPalavra = true;
                         break;
                     }else{
@@ -59,7 +59,7 @@ bool procuraNaVertical(char matriz[][M], Palavras palavra, int linha, int coluna
                         letra++;
                         countAndarLinha++;
                     }else if(palavra.palavra[letra] == '\0'){
-                        cout << "A palavra '"<< palavra.palavra <<"' foi localizada verticalmente a partir da linha " << i << " e da coluna " << j << endl;
+                        cout << "A palavra '"<< palavra.palavra <<"' foi localizada verticalmente a partir da " << i+1 << "ª linha e da " << j+1 << "ª coluna " << endl;
                         achouPalavra = true;
                         letra = 0;
                         countAndarLinha = 1;
@@ -95,7 +95,7 @@ bool procuraNaDiagonal(char matriz[][M], Palavras palavra, int linha, int coluna
                         letra++;
                         countAndarDiagonal++;
                     }else if(palavra.palavra[letra] == '\0'){
-                        cout << "A palavra '"<< palavra.palavra <<"' foi localizada diagonalmente a partir da linha " << i  << " e da coluna " << j << endl;
+                        cout << "A palavra '"<< palavra.palavra <<"' foi localizada diagonalmente a partir da " << i+1 << "ª linha e da " << j+1 << "ª coluna " << endl;
                         achouPalavra = true;
                         break;
                     }else{
@@ -137,6 +137,14 @@ int main(){
     cin >> linha;
     cout << "Insira o numero de colunas da matriz:" << endl;
     cin >> coluna;
+
+    while(linha != coluna || linha < 10 || linha > M){
+        cout << "Valores Inválidos, a matriz deve ser quadrada e estar entre 10 e " << M << " de tamanho, por favor insira novos valores." << endl;
+        cout << "Insira o novo numero de linhas da matriz:" << endl;
+        cin >> linha;
+        cout << "Insira o novo numero de colunas da matriz:" << endl;
+        cin >> coluna;
+    }
     
     cin.ignore();
     
@@ -175,14 +183,17 @@ int main(){
 
         if(procuraNaHorizontal(matriz, palavras[i], linha, coluna) == false){
             countNaoAchou++;
-        }if(procuraNaVertical(matriz, palavras[i], linha, coluna) == false){
+        }
+        if(procuraNaVertical(matriz, palavras[i], linha, coluna) == false){
             countNaoAchou++;
-        }if(procuraNaDiagonal(matriz, palavras[i], linha, coluna) == false){
+        }
+        if(procuraNaDiagonal(matriz, palavras[i], linha, coluna) == false){
             countNaoAchou++;
-        }if(countNaoAchou == 3){
+        }
+        if(countNaoAchou == 3){
             cout << "A palavra '" << palavras[i].palavra << "' não foi encontrada" << endl;
         }
-
+        cout << countPalavrasAchadas << endl;
         countNaoAchou = 0;  
     }
     return 0;
