@@ -237,7 +237,7 @@ int main(){
         countNaoAchou = 0;  
     }
 
-    // Diego Pereira e Eduarda Nunes
+    // Diego Pereira
     // Imprime a forma final da matriz cópia (a que está com as palavras encontradas em destaque/maiúsculo)
     cout << "--------------------------------------------------------------------------------" << endl << endl;
 
