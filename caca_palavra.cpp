@@ -5,13 +5,33 @@
 
 using namespace std;
 
-int countPalavrasAchadas = 0;
-
 struct Palavras{
     char palavra[100];
 };
 
-bool procuraNaHorizontal(char matriz[][M], Palavras palavra, int linha, int coluna){
+void destacarPalavra(char matrizCopia[][M], int tamanho, int linha, int coluna, bool horizontal, bool vertical, bool diagonal){
+    if(vertical){
+        for(int i = 0; i < tamanho; i++){
+            if(matrizCopia[linha+i][coluna] >= 'a' && matrizCopia[linha+i][coluna] <= 'z'){
+                matrizCopia[linha+i][coluna] = matrizCopia[linha+i][coluna] - 'a' + 'A';
+            }
+        }
+    }else if(horizontal){
+        for(int i = 0; i < tamanho; i++){
+            if(matrizCopia[linha][coluna+i] >= 'a' && matrizCopia[linha][coluna+i] <= 'z'){
+                matrizCopia[linha][coluna+i] = matrizCopia[linha][coluna+i] - 'a' + 'A';
+            }
+        }
+    }else if(diagonal){
+        for(int i = 0; i < tamanho; i++){
+            if(matrizCopia[linha+i][coluna+i] >= 'a' && matrizCopia[linha+i][coluna+i] <= 'z'){
+                matrizCopia[linha+i][coluna+i] = matrizCopia[linha+i][coluna+i] - 'a' + 'A';
+            }
+        }
+    }
+}
+
+bool procuraNaHorizontal(char matriz[][M], char matrizCopia[][M], Palavras palavra, int linha, int coluna){
 
     bool achouPalavra = false;
     int letra = 0, countAndarColuna = 1;
@@ -27,6 +47,9 @@ bool procuraNaHorizontal(char matriz[][M], Palavras palavra, int linha, int colu
                     }else if(palavra.palavra[letra] == '\0'){
                         cout << "A palavra '"<< palavra.palavra <<"' foi localizada horizontalmente a partir da " << i+1 << "ª linha e da " << j+1 << "ª coluna " << endl;
                         achouPalavra = true;
+                        letra = 0;
+                        countAndarColuna = 1;
+                        destacarPalavra(matrizCopia, strlen(palavra.palavra), i, j, true, false, false);
                         break;
                     }else{
                         letra = 0;
@@ -45,7 +68,7 @@ bool procuraNaHorizontal(char matriz[][M], Palavras palavra, int linha, int colu
     }
 }
 
-bool procuraNaVertical(char matriz[][M], Palavras palavra, int linha, int coluna){
+bool procuraNaVertical(char matriz[][M], char matrizCopia[][M], Palavras palavra, int linha, int coluna){
 
     bool achouPalavra = false;
     int letra = 0, countAndarLinha = 1;
@@ -63,6 +86,7 @@ bool procuraNaVertical(char matriz[][M], Palavras palavra, int linha, int coluna
                         achouPalavra = true;
                         letra = 0;
                         countAndarLinha = 1;
+                        destacarPalavra(matrizCopia, strlen(palavra.palavra), i, j, false, true, false);
                         break;
                     }else{
                         letra = 0;
@@ -81,7 +105,7 @@ bool procuraNaVertical(char matriz[][M], Palavras palavra, int linha, int coluna
     }
 }
 
-bool procuraNaDiagonal(char matriz[][M], Palavras palavra, int linha, int coluna){
+bool procuraNaDiagonal(char matriz[][M], char matrizCopia[][M], Palavras palavra, int linha, int coluna){
     
     bool achouPalavra = false;
     int letra = 0, countAndarDiagonal = 1;
@@ -97,6 +121,9 @@ bool procuraNaDiagonal(char matriz[][M], Palavras palavra, int linha, int coluna
                     }else if(palavra.palavra[letra] == '\0'){
                         cout << "A palavra '"<< palavra.palavra <<"' foi localizada diagonalmente a partir da " << i+1 << "ª linha e da " << j+1 << "ª coluna " << endl;
                         achouPalavra = true;
+                        letra = 0;
+                        countAndarDiagonal = 1;
+                        destacarPalavra(matrizCopia, strlen(palavra.palavra), i, j, false, false, true);
                         break;
                     }else{
                         letra = 0;
@@ -162,39 +189,54 @@ int main(){
     }
 
     char matriz[M][M];
+    char matrizCopia[M][M];
     cout << "Insira os elementos da matriz:" << endl;
     for(int i=0; i<linha; i++){
         for(int j=0; j<coluna; j++){
             cin >> matriz[i][j];
             matriz[i][j] = transformaEmMinuscula(matriz[i][j]);
+            matrizCopia[i][j] = matriz[i][j];
         }
-    }
-    cout << "A matriz inserida foi:" << endl;
-    for(int i=0; i<linha; i++){
-        for(int j=0; j<coluna; j++){
-            cout << matriz[i][j] << " ";
-        }
-        cout << endl;
     }
 
+    cout << endl << "-------------------------------------------------------------------------------" << endl;
     for(int i = 0; i < n_palavras; i++){
 
         int countNaoAchou = 0;
 
-        if(procuraNaHorizontal(matriz, palavras[i], linha, coluna) == false){
+        if(procuraNaHorizontal(matriz, matrizCopia, palavras[i], linha, coluna) == false){
             countNaoAchou++;
         }
-        if(procuraNaVertical(matriz, palavras[i], linha, coluna) == false){
+        if(procuraNaVertical(matriz, matrizCopia, palavras[i], linha, coluna) == false){
             countNaoAchou++;
         }
-        if(procuraNaDiagonal(matriz, palavras[i], linha, coluna) == false){
+        if(procuraNaDiagonal(matriz, matrizCopia, palavras[i], linha, coluna) == false){
             countNaoAchou++;
         }
         if(countNaoAchou == 3){
             cout << "A palavra '" << palavras[i].palavra << "' não foi encontrada" << endl;
         }
-        cout << countPalavrasAchadas << endl;
+
         countNaoAchou = 0;  
     }
+    cout << "--------------------------------------------------------------------------------" << endl << endl;
+
+    cout << "O caça-palavras ficou assim com as palavras encontradas em maiúsculo: " << endl << endl;
+
+    for(int k = 0; k < coluna*2.4; k++){
+        cout << "-";
+    }
+    cout << endl;
+    for(int i=0; i<linha; i++){
+        cout << "| ";
+        for(int j=0; j<coluna; j++){
+            cout << matrizCopia[i][j] << " ";                
+        }
+        cout << " |" << endl;
+    }
+    for(int k = 0; k < coluna*2.4; k++){
+        cout << "-";
+    }
+
     return 0;
 }
