@@ -9,6 +9,8 @@ struct Palavras{
     char palavra[100];
 };
 
+// João Lucas Machado
+// Transforma as letras das palavras encontradas em maiúsculas
 void destacarPalavra(char matrizCopia[][M], int tamanho, int linha, int coluna, bool horizontal, bool vertical, bool diagonal){
     if(vertical){
         for(int i = 0; i < tamanho; i++){
@@ -31,6 +33,8 @@ void destacarPalavra(char matrizCopia[][M], int tamanho, int linha, int coluna, 
     }
 }
 
+// Eduarda Nunes
+// Procura compatibilidade da palavra nas linhas horizontais da matriz
 bool procuraNaHorizontal(char matriz[][M], char matrizCopia[][M], Palavras palavra, int linha, int coluna){
 
     bool achouPalavra = false;
@@ -49,6 +53,7 @@ bool procuraNaHorizontal(char matriz[][M], char matrizCopia[][M], Palavras palav
                         achouPalavra = true;
                         letra = 0;
                         countAndarColuna = 1;
+                        // depois de encontrar a palavra chama a função destacarPalavra para transformar ela em maiuscula
                         destacarPalavra(matrizCopia, strlen(palavra.palavra), i, j, true, false, false);
                         break;
                     }else{
@@ -68,6 +73,8 @@ bool procuraNaHorizontal(char matriz[][M], char matrizCopia[][M], Palavras palav
     }
 }
 
+// Eduarda Nunes
+// Procura compatibilidade da palavra nas linhas verticais da matriz
 bool procuraNaVertical(char matriz[][M], char matrizCopia[][M], Palavras palavra, int linha, int coluna){
 
     bool achouPalavra = false;
@@ -86,6 +93,7 @@ bool procuraNaVertical(char matriz[][M], char matrizCopia[][M], Palavras palavra
                         achouPalavra = true;
                         letra = 0;
                         countAndarLinha = 1;
+                        // depois de encontrar a palavra chama a função destacarPalavra para transformar ela em maiuscula
                         destacarPalavra(matrizCopia, strlen(palavra.palavra), i, j, false, true, false);
                         break;
                     }else{
@@ -105,6 +113,8 @@ bool procuraNaVertical(char matriz[][M], char matrizCopia[][M], Palavras palavra
     }
 }
 
+// Eduarda Nunes
+// Procura compatibilidade da palavra nas linhas diagonais da matriz
 bool procuraNaDiagonal(char matriz[][M], char matrizCopia[][M], Palavras palavra, int linha, int coluna){
     
     bool achouPalavra = false;
@@ -123,6 +133,7 @@ bool procuraNaDiagonal(char matriz[][M], char matrizCopia[][M], Palavras palavra
                         achouPalavra = true;
                         letra = 0;
                         countAndarDiagonal = 1;
+                        // depois de encontrar a palavra chama a função destacarPalavra para transformar ela em maiuscula
                         destacarPalavra(matrizCopia, strlen(palavra.palavra), i, j, false, false, true);
                         break;
                     }else{
@@ -142,6 +153,8 @@ bool procuraNaDiagonal(char matriz[][M], char matrizCopia[][M], Palavras palavra
     }    
 }
 
+// Joao Lucas
+// Transforma as letras em minúsculas para facilitar a busca
 char transformaEmMinuscula(char letra){
     if(letra >= 'A' && letra <= 'Z'){
         return letra + 'a' - 'A';
@@ -150,6 +163,8 @@ char transformaEmMinuscula(char letra){
     }
 }
 
+// Diego Pereira && João Lucas
+// Configurações gerais de entrada e saída do programa
 int main(){
     int n_palavras, linha, coluna;
     
@@ -199,6 +214,8 @@ int main(){
         }
     }
 
+    // Eduarda Nunes
+    // Imprime o resultado das buscas
     cout << endl << "-------------------------------------------------------------------------------" << endl;
     for(int i = 0; i < n_palavras; i++){
 
@@ -219,12 +236,15 @@ int main(){
 
         countNaoAchou = 0;  
     }
+
+    // Diego Pereira e Eduarda Nunes
+    // Imprime a forma final da matriz cópia (a que está com as palavras encontradas em destaque/maiúsculo)
     cout << "--------------------------------------------------------------------------------" << endl << endl;
 
     cout << "O caça-palavras ficou assim com as palavras encontradas em maiúsculo: " << endl << endl;
 
-    for(int k = 0; k < coluna*2.4; k++){
-        cout << "-";
+    for(int k = 0; k < coluna+2; k++){
+        cout << "- ";
     }
     cout << endl;
     for(int i=0; i<linha; i++){
@@ -232,10 +252,10 @@ int main(){
         for(int j=0; j<coluna; j++){
             cout << matrizCopia[i][j] << " ";                
         }
-        cout << " |" << endl;
+        cout << "|" << endl;
     }
-    for(int k = 0; k < coluna*2.4; k++){
-        cout << "-";
+    for(int k = 0; k < coluna+2; k++){
+        cout << "- ";
     }
 
     return 0;
