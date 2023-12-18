@@ -1,4 +1,4 @@
-# Hunting-words
+# Caça Palavras
 
 Trabalho Final da disciplina de Algoritmos I, desenvolvido em C++
 
