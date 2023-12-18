@@ -6,4 +6,4 @@ Trabalho Final da disciplina de Algoritmos I, desenvolvido em C++
 
 * Diego Pereira
 * Eduarda Nunes
-* João Lucas Machado
+* João Lucas Machado 

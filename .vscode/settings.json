@@ -1,0 +1,5 @@
+{
+    "C_Cpp.default.compilerPath": "c:\\msys64\\clang64.exe",
+    "cmake.configureOnOpen": true,
+    "C_Cpp.errorSquiggles": "disabled"
+}
