@@ -233,7 +233,6 @@ int main(){
         if(countNaoAchou == 3){
             cout << "A palavra '" << palavras[i].palavra << "' não foi encontrada" << endl;
         }
-
         countNaoAchou = 0;  
     }
 
